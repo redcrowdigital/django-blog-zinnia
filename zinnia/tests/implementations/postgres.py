@@ -3,7 +3,7 @@ from zinnia.tests.implementations.settings import *  # noqa
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'zinnia',
         'USER': 'postgres',
         'HOST': 'localhost'

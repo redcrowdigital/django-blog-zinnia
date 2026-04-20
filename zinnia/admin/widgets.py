@@ -4,6 +4,7 @@ from itertools import chain
 
 from django.contrib.admin import widgets
 from django.contrib.staticfiles.storage import staticfiles_storage
+from django.core.exceptions import FullResultSet
 from django.forms import Media
 from django.utils.encoding import force_str
 from django.utils.safestring import mark_safe
@@ -79,8 +80,10 @@ class TagAutoComplete(widgets.AdminTextInputWidget):
         """
         Returns the list of tags to auto-complete.
         """
-        return [tag.name for tag in
-                Tag.objects.usage_for_model(Entry)]
+        try:
+            return [tag.name for tag in Tag.objects.usage_for_model(Entry)]
+        except FullResultSet:
+            return [tag.name for tag in Tag.objects.all()]
 
     def render(self, name, value, attrs=None, renderer=None):
         """
